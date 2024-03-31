@@ -1,0 +1,250 @@
+body {
+}
+
+.section-1 {
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    background-color: #293241;
+}
+
+.sub-section-right {
+    height: 98vh;
+}
+
+.visualization-row {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+
+  }
+  
+  .visualization-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 50%;
+  }
+
+  #radar-chart-viz {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+  }
+  
+
+/* #bubble-chart-viz {
+    margin: 0;
+    padding: 0;
+    align-self: flex-start; /* Aligns the container to the start of the cross axis if it's a flex item */
+
+
+#chart-area {
+    display: flex; /* Establishes a flex container */
+    flex-direction: row; /* Align children horizontally */
+    justify-content: space-around; /* Even spacing around the children */
+    align-items: flex-start; /* Align children to the start of the cross axis */
+  }
+
+  .bubble-svg {
+    margin: 0;
+    display: block; /* Removes any inline formatting that might add space */
+}
+
+.circle-click {
+    stroke: white;
+}
+
+.map {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.map-title {
+    font-size: 1.5em;
+    color: #98C1D9;
+}
+
+#map-viz {
+    height: 100%;
+    /* padding: 1em; */
+    position: relative;
+    border-right: 1px solid black;
+}
+
+.map-bottom {
+    color: #98C1D9;
+    bottom: 1em;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+/* #line-viz {
+    border-left: 1px solid black;
+} */
+
+.line-svg {
+    padding: 1em 2em;
+}
+
+.section-2 {
+    height: 100vh;
+    padding: 2em;
+    background-color: #3D5A80;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: left;
+}
+
+.title {
+    font-size: 1.5em;
+}
+
+.right-section {
+    width: 43%;
+    border-left: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.vaccination-rate {
+    margin: 3em;
+}
+
+.section-3 {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie-title {
+    margin: 2em 0 0 0;
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+
+}
+
+#scatterplot {
+    width: 100%;
+    height: 600px;
+    position: relative;
+}
+
+.tooltip {
+    background: #fff;
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 10px;
+    position: absolute;
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+    font-size: 12px;
+    opacity: 1;
+    /* Set initial opacity to 1 for debugging */
+    display: block;
+    /* Set initial display to block for debugging */
+}
+
+.axis-label {
+    font-size: 14px;
+    text-anchor: middle;
+}
+
+/* Style for axis labels */
+.axis-label {
+    fill: #000;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+
+
+/* .bubble-svg {
+    margin-right: 20px; /* Adjust the spacing between the bubble chart and histogram */
+/* } */
+
+
+/* Center the SVG container */
+#choropleth-map svg {
+    display: block;
+    margin: auto;
+}
+
+/* Adjust the legend positioning */
+#legend {
+    font-size: 0.8em;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.map-tooltip {
+    position: absolute;
+    text-align: left;
+    width: auto;
+    white-space: nowrap; /* Remove this if you have it, to allow for text wrapping */
+    padding: 4px;
+    background: white;
+    border: 0;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+}
+
+#map-legend {
+    position: absolute;
+    top: 50px; /* Adjust as needed */
+    left: 150px; /* Adjust as needed */
+    background: white;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.9em;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    z-index: 10;
+}
+
+#map-legend div {
+    margin-bottom: 2px; 
+}
+
+#choropleth-map {
+    position: relative;
+    margin: auto;
+    top: 50px; /* Adjust to center the map in the page */
+    width: 960px; /* Your map width */
+    height: 600px; /* Your map height */
+}
+
+#reset-zoom {
+    position: absolute;
+    right: 320px; /* Adjust if you want more space from the right edge of the viewport */
+    bottom: 45px; /* Adjust if you want more space from the bottom edge of the viewport */
+    padding: 5px 10px; /* Adjust padding to your liking */
+    z-index: 10; /* Ensure the button is visible above other elements if needed */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+}
+
+
+
+/* Stacked Bar Chart styling */
+
+.chart_container {
+    width: 1000px;
+    background-color: #293241;
+    overflow-x: scroll;
+    text-shadow: none;
+}

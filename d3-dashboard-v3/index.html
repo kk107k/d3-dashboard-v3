@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    </link>
+    <title>D3-Coursework</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 300;
+            fill: #242424;
+            text-align: center;
+            text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+            cursor: default;
+        }
+        .legend {
+            font-family: 'Raleway', sans-serif;
+            fill: #333333;
+        }
+        .tooltip {
+            fill: #333333;
+        }
+        #countrySelector {
+            width: 50%;
+            margin: 0 auto 20px auto;
+        }
+    </style>
+</head>
+
+<body>
+   
+
+    <div class="main_container">
+        <div class="main_container_heading">
+            <div class="main_container_heading_left">
+                <div class="main_container_heading_left_text">
+
+                </div>
+                <div class="main_container_heading_left_stats">
+
+                </div>
+            </div class="main_container_heading_right">
+                <div class="main_container_heading_right_logo">
+
+                </div>
+            </div>
+        </div>
+        <div class="main_container_second_row">
+            <div class="main_container_second_row_left">
+
+            </div>
+            <div class="main_container_second_row_right">
+
+            </div>
+        </div>
+        <div class="main_container_third_row">
+            <div class="main_container_third_row_left">
+
+            </div>
+            <div class="main_container_third_row_middle">
+
+            </div>
+            <div class="main_container_third_row_right">
+
+            </div>
+        </div>
+        <div class="main_container_fourth_row">
+            <div class="main_container_fourth_row_left">
+
+            </div>
+            <div class="main_container_fourth_row_right">
+
+            </div>
+        </div>
+        <div class="main_container_fifth_row">
+            <div class="main_container_fifth_row_left">
+
+            </div>
+            <div class="main_container_fifth_row_middle">
+
+            </div>
+            <div class="main_container_fifth_row_right">
+
+            </div>
+        </div>
+
+    </div>
+    
+
+    <div class="visualization-row">
+        <div id="bubble-viz" class="visualization-container"></div>
+        <div id="radar-chart-viz" class="visualization-container">
+          <div id="countrySelector"></div>
+          <div class="radarChart"></div>
+        </div>
+        <div id="bubble-chart-viz" class="visualization-container"></div>
+      </div>
+
+      <div class="chart_container">
+        <div id="stackedchart"></div>
+      </div>
+      
+    <script src="scripts/stackedbarChart.js"></script>
+    
+    <script src="scripts/radarChart.js"></script>
+    <script src="scripts/bubble.js"></script>
+
+    <div id="piechart"></div>
+    
+    <!-- <script src="./map.js"></script>
+    <script src="./line.js"></script> -->
+    
+    <div id="scatterplot"></div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="./scripts/scatterPlot.js"></script>
+
+    <div>
+       <div id="choropleth-map"></div> <!-- This is your map container -->
+        <div id="map-legend"></div>
+        <button id="reset-zoom">Reset Zoom</button> 
+    </div>
+    
+    <script src="./scripts/worldMap.js"></script>
+
+    <script src="./scripts/pieChart.js"></script>
+</body>
+
+</html>
