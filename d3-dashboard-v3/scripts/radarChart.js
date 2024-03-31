@@ -81,13 +81,15 @@ function RadarChart(id, data, options) {
   axisGrid.selectAll(".axisLabel")
       .data(d3.range(1, (cfg.levels + 1)).reverse())
       .enter().append("text")
+      
       .attr("class", "axisLabel")
       .attr("x", 4)
       .attr("y", d => -d * radius / cfg.levels)
       .attr("dy", "0.4em")
-      .style("font-size", "10px")
-      .attr("fill", "#737373")
+      .style("font-size", "14px")
+    .style("fill", "#ffffff") //TO COLOR THE TEXT FOR PERCENTAGE
       .text(d => Format(maxValue * d / cfg.levels));
+      
   // Draw the axes
   var axes = axisGrid.selectAll(".axis")
       .data(allAxis)
@@ -107,6 +109,7 @@ function RadarChart(id, data, options) {
 
   // Append the labels at each axis
   axes.append("text")
+     .style("fill", "#ffffff") //TO COLOR THE TEXT FOR AXIS
       .attr("class", "legend")
       .style("font-size", "11px")
       .attr("text-anchor", "middle")

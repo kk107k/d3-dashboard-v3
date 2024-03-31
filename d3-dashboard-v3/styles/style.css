@@ -36,7 +36,7 @@ html {
 
 /* Style for axis labels */
 .axis-label {
-    fill: #000;
+    fill: #000000;
     font-size: 12px;
     font-weight: bold;
 }

@@ -10,18 +10,18 @@ function displayDetails(data) {
 }
 
 // Set the dimensions and margins of the graph
-const Smargin = { top: 50, right: 20, bottom: 70, left: 80 },
+const Smargin = { top: 50, right: 20, bottom: 70, left: 40 },
     Swidth = 5000 - Smargin.left - Smargin.right,
-    Sheight = 700 - Smargin.top - Smargin.bottom;
+    Sheight = 400 - Smargin.top - Smargin.bottom;
 
 // Set the ranges
-const x = d3.scaleBand().rangeRound([0, 6000]).padding(0.05),
+const x = d3.scaleBand().rangeRound([0, 6000]),
     y = d3.scaleLinear().rangeRound([Sheight, 0]);
 
 // Define the Scolors for the stacked bars
 const Scolor = d3.scaleOrdinal()
     .domain(["GDP", "Total_tax_rate", "Tax_revenue"])
-    .range(["#067BA3", "#A30644", "#98abc5"]);
+    .range([ "#BFF5FF" ,"#00a7e1", "#80EBFF" ]);
 
 // Append the SVG object to the div
 const stackedsvg = d3.select("#stackedchart").append("svg")
@@ -82,13 +82,12 @@ d3.csv("data/world-data-2023.csv").then(data => {
     // Add the x-axis
     stackedsvg.append("g")
         .attr("class", "axis axis--x")
-        .attr("transform", "translate(0," + Sheight + ")")
+        .attr("transform", "translate(0," + (Sheight + 2 ) + ")")
         .call(d3.axisBottom(x))
+        .attr("color","white")
         .selectAll("text")
         .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)")
+        .attr("transform", "rotate(-35)")
         .attr("color","white")
         .attr("font-size", "15px");
 
@@ -96,12 +95,7 @@ d3.csv("data/world-data-2023.csv").then(data => {
     stackedsvg.append("g")
         .attr("class", "axis axis--y")
         .call(d3.axisLeft(y).ticks(10))
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", "0.71em")
-        .attr("text-anchor", "end")
-        .text("Value");
+        .attr("color","white");
 
     // Add the bars
     const layer = stackedsvg.selectAll(".layer")
@@ -115,22 +109,20 @@ d3.csv("data/world-data-2023.csv").then(data => {
     const tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
-
-    layer.selectAll("rect")
+        layer.selectAll("rect")
         .data(d => d)
         .enter().append("rect")
         .attr("class", "bar")
         .attr("x", d => x(d.data.Country))
         .attr("y", d => y(d[1]))
-        .attr("height", d => y(d[0]) - y(d[1]))
+        .attr("height", d => {return y(d[0]) - y(d[1]);})
         .attr("width", x.bandwidth())
         .attr("stroke", "black")
         .on("mouseover", function (event, d) {
             tooltip.transition()
                 .duration(200)
-                .style("opacity", .9);
-            tooltip.html("Country: " + d.data.Country + "<br/>Value: " + d.data.Tax_revenue) // Use actual data attributes     window.alert("BISMA IS A IDIOT DOG"); window.alert("BISMA IS A BIG FAT DOG");     window.alert("BISMA IS A BIG FAT SMELLY DOG"); window.alert("BISMA IS A POOPOO KAA KAA DOG");
-
+                .style("opacity", .9)
+                tooltip.html("Country: " + d.data.Country + "<br/> "+ getValueLabel(d)) // Use actual data attributes
                 .style("left", (event.pageX) + "px")
                 .style("top", (event.pageY - 28) + "px");
         })
@@ -142,6 +134,45 @@ d3.csv("data/world-data-2023.csv").then(data => {
         .on("click", function (event, d) {
             displayDetails(d);
         });
+        function getValueLabel(d) {
+            console.log("Current Data (d):", d);
+        
+            // Check if the data object has the required fields
+            console.log("Country:", d.data.Country);
+            console.log("Total Tax Rate:", d.data.Total_tax_rate);
+            console.log("Tax Revenue:", d.data.Tax_revenue);
+            console.log("GDP:", d.data.originalGDP);
+        
+            // Round the difference between upper and lower bounds of the bar
+            const barValue = Math.round(d[1] - d[0]);
+        
+            // Mapping object for displaying user-friendly labels
+            const fieldLabels = {
+                "Total_tax_rate": "Total Tax Rate",
+                "Tax_revenue": "Tax Revenue",
+                "GDP": "GDP"
+            };
+        
+            const dataFields = ["Total_tax_rate", "Tax_revenue", "GDP"];
+            for (const field of dataFields) {
+                // Check if the difference between barValue and data field value is within ±1
+                if (Math.abs(barValue - d.data[field]) <= 1) {
+                    // Use the display name from fieldLabels if available
+                    const displayName = fieldLabels[field] || field;
+                    // Return the label with the user-friendly display name
+                    return `${displayName}: ${field === "GDP" ? d.data.originalGDP : d.data[field]}`;
+                }
+            }
+        
+            console.log("Bar Value:", barValue);
+            console.log("Data:", d.data);
+            console.log("Data Fields:", dataFields);
+            console.log("Data Field Values:", dataFields.map(field => d.data[field]));
+        
+            // If no match is found within the tolerance range, return "Not Available"
+            return "Not Available";
+        }
+        
 });
 
 // Append a group for the legend

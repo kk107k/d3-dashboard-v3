@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
     <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" type="text/css" href="styles/constants.css">
     </link>
     <title>D3-Coursework</title>
     <script src='https://d3js.org/d3.v7.min.js'></script>
@@ -15,28 +16,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 11px;
-            font-weight: 300;
-            fill: #242424;
-            text-align: center;
-            text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
-            cursor: default;
-        }
-        .legend {
-            font-family: 'Raleway', sans-serif;
-            fill: #333333;
-        }
-        .tooltip {
-            fill: #333333;
-        }
-        #countrySelector {
-            width: 50%;
-            margin: 0 auto 20px auto;
-        }
-    </style>
+
 </head>
 
 <body>
@@ -46,19 +26,44 @@
         <div class="main_container_heading">
             <div class="main_container_heading_left">
                 <div class="main_container_heading_left_text">
-
+                    <h1>The State of the World in 2023: Key Indicators of Progress and Challenges
+                    </h1>
                 </div>
                 <div class="main_container_heading_left_stats">
-
+                    <div class="main_container_heading_left_stats_item">
+                        <h2>Population</h2>
+                        <p>7.9 Billion</p>
+                    </div>
+                    <div class="main_container_heading_left_stats_item">
+                        <h2>Life Expectancy</h2>
+                        <p>73.3 Years</p>
+                    </div>
+                    <div class="main_container_heading_left_stats_item">
+                        <h2>Child Mortality</h2>
+                        <p>3.9%</p>
+                    </div>
+                    <div class="main_container_heading_left_stats_item">
+                        <h2>Child Mortality</h2>
+                        <p>3.9%</p>
+                    </div>
+                    <div class="main_container_heading_left_stats_item">
+                        <h2>Child Mortality</h2>
+                        <p>3.9%</p>
+                    </div>
                 </div>
-            </div class="main_container_heading_right">
+                </div>
+            <div class="main_container_heading_right">
                 <div class="main_container_heading_right_logo">
-
+                    <img src="./assets/heriotwattlogo.png" id="logo"/>
                 </div>
             </div>
-        </div>
+                
+            </div>
         <div class="main_container_second_row">
             <div class="main_container_second_row_left">
+
+            </div>
+            <div class="main_container_second_row_middle">
 
             </div>
             <div class="main_container_second_row_right">
@@ -67,7 +72,7 @@
         </div>
         <div class="main_container_third_row">
             <div class="main_container_third_row_left">
-
+            
             </div>
             <div class="main_container_third_row_middle">
 
@@ -78,10 +83,11 @@
         </div>
         <div class="main_container_fourth_row">
             <div class="main_container_fourth_row_left">
-
+                <div id="stackedchart"></div>
             </div>
             <div class="main_container_fourth_row_right">
-
+                <div id="countrySelector"></div>
+                <div class="radarChart"></div>
             </div>
         </div>
         <div class="main_container_fifth_row">
@@ -128,7 +134,6 @@
 
     <div>
        <div id="choropleth-map"></div> <!-- This is your map container -->
-        <div id="map-legend"></div>
         <button id="reset-zoom">Reset Zoom</button> 
     </div>
     

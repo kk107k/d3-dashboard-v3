@@ -1,0 +1,21 @@
+:root {
+    --primary-color: #15192a;
+    --secondary-color: #1f263c;
+
+    --text-color: #ffffff;
+    --secondary-text-color: #cccccc;
+    --extra-text-color: #00a7e1;
+
+    --chart-color-1: #BFF5FF;
+    --chart-color-2: #00a7e1;
+    --chart-color-3: #80EBFF;
+    --chart-color-4: #00859D;
+}
+
+
+h1 {
+    letter-spacing: 2px;
+    font-weight: 200;
+    font-size: 2rem;
+    color: var(--text-color);
+}
