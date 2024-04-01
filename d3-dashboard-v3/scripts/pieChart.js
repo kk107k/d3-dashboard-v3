@@ -18,25 +18,28 @@ const pieUnemploymentDataset = [
 let currentDataset = pieDataset; // Set the initial dataset
 
 // chart dimensions
-const pieWidth = 600;
-const pieHeight = 400;
+const pieWidth = 800;
+const pieHeight = 300;
 
 // a circle chart needs a radius
 const pieRadius = Math.min(pieWidth, pieHeight) / 2;
 
 // legend dimensions
-const pieLegendRectSize = 15;
-const pieLegendSpacing = 4;
+const pieLegendRectSize = 20;
+const pieLegendSpacing = 10;
 
-// define color scale
-const pieColor = d3.scaleOrdinal(d3.schemeCategory10);
+const customColors = ['#BFF5FF', '#ffffff', '#00a7e1', '#80EBFF', '#00859D'];
+
+const pieColor = d3.scaleOrdinal()
+    .domain(pieDataset.map(d => d.label))
+    .range(customColors);
 
 const pieSvg = d3.select('#piechart')
   .append('svg')
   .attr('width', pieWidth)
   .attr('height', pieHeight)
   .append('g')
-  .attr('transform', `translate(${pieWidth / 2}, ${pieHeight / 2})`);
+  .attr('transform', `translate(${pieWidth / 2 - 220}, ${pieHeight / 2})`);
 
 const pieArc = d3.arc()
   .innerRadius(0)
@@ -46,20 +49,8 @@ const piePie = d3.pie()
   .value(d => d.count)
   .sort(null);
 
-const pieTooltip = d3.select('#piechart')
-  .append('div')
-  .attr('class', 'tooltip');
 
-pieTooltip.append('div')
-  .attr('class', 'label');
-pieTooltip.append('div')
-  .attr('class', 'count');
-pieTooltip.append('div')
-  .attr('class', 'percent');
 
-currentDataset.forEach(d => {
-  d.count = +d.count;
-});
 
 function updatePie(selectedDataset) {
   // Transition out old arcs by shrinking them to the core
@@ -133,6 +124,9 @@ function updateLegend(currentDataset) {
   // Enter selection for new legend items
   const legendEnter = legendUpdate.enter().append('g')
     .attr('class', 'legend')
+    .attr('cursor', 'pointer')
+    .style('fill', 'white')
+    .attr("font-size", "15px")
     .attr('opacity', 0) // Start them as invisible
     .on('click', function(event, d) {
       currentDataset[d.index].enabled = !currentDataset[d.index].enabled;
@@ -143,8 +137,8 @@ function updateLegend(currentDataset) {
   legendEnter.append('rect')
     .attr('width', pieLegendRectSize)
     .attr('height', pieLegendRectSize)
-    .style('fill', d => d.enabled ? pieColor(d.label) : 'white')
-    .style('stroke', d => d.enabled ? pieColor(d.label) : '#aaa');
+    .attr('rx', 2)
+    .attr('ry', 2)
 
   // Append text for the legend
   legendEnter.append('text')
@@ -159,7 +153,7 @@ function updateLegend(currentDataset) {
     .attr('transform', (d, i) => {
       const height = pieLegendRectSize + pieLegendSpacing;
       const offset = height * currentDataset.length / 2; // Adjust offset based on current dataset length
-      const horz = 15 * pieLegendRectSize; // Adjust for horizontal positioning
+      const horz = 9 * pieLegendRectSize; // MARGIN BETWEEN THE PIE CHART AND LEGEND
       const vert = i * height - offset;
       return `translate(${horz}, ${vert})`;
     });
@@ -192,6 +186,9 @@ const radioContainer = d3.select('#piechart')
   .style('text-align', 'center');
 
 const radioGroup = radioContainer.append('div')
+  .style('color', 'white')
+  .style("font-size", "20px")
+  .style('margin', '20px 10px 0px 0px')
   .attr('id', 'radio-group');
 
 const radioButton1 = radioGroup.append('input')
