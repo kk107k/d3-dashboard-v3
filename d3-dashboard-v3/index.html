@@ -20,6 +20,9 @@
 </head>
 
 <body>
+     <script src="scripts/worldMap.js"></script>
+     <script src="scripts/barChart.js"></script>
+     <script src="scripts/donutChart.js"></script>
    
 
     <div class="main_container">
@@ -61,11 +64,12 @@
             </div>
         <div class="main_container_second_row">
             <div class="main_container_second_row_left">
-                <div>
+                <div class="main_container_second_row_left_map">
                     <h3>Country with population</h3>
+                    <button id="reset-zoom">Reset Zoom</button>
                 </div>
                 <div>
-
+                    <div id="visualization"></div>
                 </div>
             </div>
             <div class="main_container_second_row_right">
@@ -74,15 +78,15 @@
                         <h3>Birth and fertility rate</h3>
                     </div>
                     <div>
-    
+                        <div id="bar-chart"></div>
                     </div>
                 </div>
                 <div class="main_container_second_row_right_bottom">
                     <div>
-                        <h3>Land use from forested area aggrecultural land and urbanizrd land</h3>
+                        <h3>Land use</h3>
                     </div>
                     <div>
-    
+                        <div id="donut-chart"></div>
                     </div>
                 </div>
             </div>
@@ -132,6 +136,7 @@
                     <h3>Radar Chart</h3>
                 </div>
                 <div>
+
                     <div class="radarChart"></div>
                     <div id="countrySelector"></div>
                 </div>
@@ -180,12 +185,8 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="./scripts/scatterPlot.js"></script>
 
-    <div>
-       <div id="choropleth-map"></div> <!-- This is your map container -->
-        <button id="reset-zoom">Reset Zoom</button> 
-    </div>
-    
-    <script src="./scripts/worldMap.js"></script>
+
+   
 
     <script src="./scripts/pieChart.js"></script>
 </body>

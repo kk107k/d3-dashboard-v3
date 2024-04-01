@@ -71,7 +71,7 @@ body {
 }
 
 .main_container_second_row_left {
-    width: 1150px;
+    width: 1050px;
     height: 650px;
     border-radius: 15px;
     background-color: var(--secondary-color);
@@ -85,10 +85,24 @@ body {
 
 .main_container_second_row_right_top,
 .main_container_second_row_right_bottom {
-    width: 300px;
-    height: 300px;
+    width: 420px;
+    height: 310px;
     border-radius: 15px;
     background-color: var(--secondary-color);
+    box-shadow: 0 0 10px rgb(157, 237, 255)
+}
+
+.main_container_second_row_left_map {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.main_container_second_row_left_map button {
+    margin: 20px 20px 0px 0px;
 }
 
 /* END OF SECOND ROW CODE */
@@ -415,12 +429,36 @@ body {
 }
 
 #reset-zoom {
-    position: absolute;
-    right: 320px; /* Adjust if you want more space from the right edge of the viewport */
-    bottom: 45px; /* Adjust if you want more space from the bottom edge of the viewport */
-    padding: 5px 10px; /* Adjust padding to your liking */
-    z-index: 10; /* Ensure the button is visible above other elements if needed */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    padding: 10px 15px; 
+    z-index: 10; 
+    background-color: transparent;
+    border: 2px solid var(--text-color);
+    color: var(--text-color);
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+#reset-zoom:hover {
+    background-color: var(--chart-color-2);
+    border: 2px solid var(--chart-color-2);
+    cursor: pointer;
+    transition: 0.2s;
+} 
+
+#reset-zoom:active {
+    background-color: #0a8ab5;
+    border: 2px solid #0a8ab5;
+    transition: 0.1s;
+}
+
+.legend-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+#bar-chart {
 }
 
 
@@ -443,11 +481,6 @@ body {
     box-shadow:  0 0 10px #ffffff8e;
     margin: 30px;
 }
-
-
-
-
-
 
 /* SCROLL BAR STYLING */
 
