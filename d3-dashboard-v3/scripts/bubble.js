@@ -1,6 +1,6 @@
 // Set the dimensions and margins of the graph
-const bubbleWidth = 300;
-const bubbleHeight = 300;
+const bubbleWidth = 460;
+const bubbleHeight = 365;
 
 // Store data globally to be used by other graphs
 let mainData;
@@ -11,7 +11,7 @@ const svg = d3.select("#bubble-viz")
     .append("svg")
     .attr("class", "bubble-svg")
     .attr("width", bubbleWidth)
-    .attr("height", bubbleHeight);
+    .attr("height", bubbleHeight + 200);
 
 
 
@@ -38,7 +38,7 @@ d3.csv('data/world-data-2023.csv').then(data => {
     // Size scale for bubbles (using urban population)
     const size = d3.scaleSqrt()
         .domain([0, d3.max(bubbleData, d => d['Urban Population'])])
-        .range([3, 25]); // Circle size range
+        .range([3, 30]); // Circle size range
 
     // Create a tooltip
     const bubbleTooltip = d3.select("#bubble-viz")

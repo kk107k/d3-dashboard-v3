@@ -115,7 +115,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 0px 0px 50px 0px;
+    margin: 0px 0px 30px 0px;
 }
 
 .main_container_third_row_right,
@@ -125,6 +125,7 @@ body {
     height: 460px;
     border-radius: 15px;
     background-color: var(--secondary-color);
+    box-shadow: 0 0 10px rgb(157, 237, 255)
 
 }
 
@@ -141,15 +142,17 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 50px 0px;
+
 }
 
 .main_container_fourth_row_left {
-    width: 980px;
+    width: 1005px;
     height: 570px;
     border-radius: 15px;
     background-color: var(--secondary-color);
     overflow-y: hidden;
+    box-shadow: 0 0 10px rgb(157, 237, 255)
+
 }
 
 .main_container_fourth_row_left_top {
@@ -163,6 +166,8 @@ body {
     height: 570px;
     border-radius: 15px;
     background-color: var(--secondary-color);
+    box-shadow: 0 0 10px rgb(157, 237, 255)
+
 }
 
 
