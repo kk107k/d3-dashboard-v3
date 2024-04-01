@@ -10,7 +10,7 @@ function displayDetails(data) {
 }
 
 // Set the dimensions and margins of the graph
-const Smargin = { top: 50, right: 20, bottom: 70, left: 40 },
+const Smargin = { top: 50, right: 20, bottom: 100, left: 40 },
     Swidth = 5000 - Smargin.left - Smargin.right,
     Sheight = 400 - Smargin.top - Smargin.bottom;
 
