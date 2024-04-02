@@ -16,7 +16,7 @@ const svg = d3.select("#bubble-viz")
 
 
 // Read data from the provided CSV file
-d3.csv('data/world-data-2023.csv').then(data => {
+d3.csv('data/world-data-2023-merged.csv').then(data => {
     console.log('Data loaded:', data);
     // Convert numeric fields from string to number and remove commas
     data.forEach(d => {
