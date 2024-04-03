@@ -3,8 +3,9 @@
     --secondary-color: #1f263c;
 
     --text-color: #ffffff;
-    --secondary-text-color: #cccccc;
-    --extra-text-color: #00a7e1;
+    --secondary-text-color: #d9d9d9;
+    --text-color-heading: #c4eeff;
+    --extra-text-color: #27c2ff;
 
     --chart-color-1: #BFF5FF;
     --chart-color-2: #00a7e1;
@@ -15,16 +16,27 @@
 
 h1 {
     letter-spacing: 2px;
-    font-weight: 200;
-    font-size: 2rem;
-    color: var(--text-color);
+    font-weight: bold;
+    font-size: 31.5px;
+    width: 100%;
+    color: var(--text-color-heading);
 }
 
-h3 {
+h2 {
+    font-size: 15px;
     letter-spacing: 2px;
-    font-weight: 200;
-    font-size: 1.1rem;
+}
+
+
+h3 {
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 20px;
     text-align: start;
     margin: 30px 0px 30px 30px;
     color: var(--secondary-text-color);
+}
+
+#main_container_second_row_right_top_title {
+    margin-bottom: unset;
 }

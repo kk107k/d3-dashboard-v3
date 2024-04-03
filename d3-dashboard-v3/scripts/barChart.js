@@ -1,7 +1,7 @@
 function renderBarChart(countryData) {
     const width = 250;
-    const height = 150;
-    const margin = { top: 40, right: 20, bottom: 60, left: 150 }; // Increased left margin
+    const height = 170;
+    const margin = { top: 80, right: 20, bottom: 150, left: 150 }; // Increased left margin
 
     const barsvg = d3.select("#bar-chart")
         .append("svg")
@@ -29,8 +29,9 @@ function renderBarChart(countryData) {
         .attr("transform", `translate(0, ${height})`)
         .call(d3.axisBottom(x).ticks(5))
         .attr("color","white")
-        .attr("opacity", 0.7)
-        .style("font-size", "20px")
+        .attr("opacity", 0.9)
+        .style("font-size", "15px")
+        .style("font-weight", "100")
         .append("text")
         .attr("x", width / 2)
         .attr("y", 40)
@@ -40,13 +41,15 @@ function renderBarChart(countryData) {
         barsvg.append("g")
         .call(d3.axisLeft(y))
         .attr("color","white")
-        .attr("opacity", 0.7)
+        .attr("opacity", 0.9)
         .selectAll("text")
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
         .attr("fill", "#ffffff")
-        .attr("font-size", "20px");
+        .attr("font-size", "14px")
+        .style("letter-spacing", "2px")
+        .style("font-weight", "100");
 
     barsvg.selectAll(".bar")
         .data(data)
@@ -82,12 +85,14 @@ function renderBarChart(countryData) {
         .attr("dy", "0.35em")
 
     barsvg.append("text")
-        .attr("x", width / 2.1)
-        .attr("y", -15)
-        .attr("text-anchor", "middle")
-        .style("font-size", "15px")
+        .attr("x", -120)  //decrease y axis to take it more left 
+        .attr("y", -30) //decrease y axis to take it more up
+        .attr("text-anchor", "start")
+        .style("font-size", "20px")
+        .style("letter-spacing", "1px")
+        .style("font-weight", "bold")
         .attr("fill", "#ffffff")
-        .attr("opacity", 0.7)
+        .attr("opacity", 0.9)
         .text(`${countryData.name} Statistics`);
 
 }
