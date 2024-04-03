@@ -1,6 +1,6 @@
 // Set the dimensions and margins of the graph
-const bubbleWidth = 460;
-const bubbleHeight = 365;
+const bubbleWidth = 370;
+const bubbleHeight = 205;
 
 // Store data globally to be used by other graphs
 let mainData;
@@ -11,7 +11,7 @@ const svg = d3.select("#bubble-viz")
     .append("svg")
     .attr("class", "bubble-svg")
     .attr("width", bubbleWidth)
-    .attr("height", bubbleHeight + 200);
+    .attr("height", bubbleHeight + 100);
 
 
 
@@ -99,12 +99,10 @@ d3.csv('data/world-data-2023-merged.csv').then(data => {
         .join("circle")
         .attr("class", d => `node Country ${d.Country.replace(/\s/g, '')}`)
         .attr("r", d => size(d['Urban Population']))
-        .attr("cx", bubbleWidth / 2)
-        .attr("cy", bubbleHeight / 2)
         .style("fill", d => color(d['Land Area'])) // Color representing land area
-        .style("fill-opacity", 0.8)
+        .style("fill-opacity", 1)
         .attr("stroke", "black")
-        .style("stroke-width", 3)
+        .style("stroke-width", 2) // the circles border width
         .on("mouseover", mouseOver)
         .on("mousemove", mouseMove)
         .on("mouseleave", mouseLeave);
@@ -113,7 +111,7 @@ d3.csv('data/world-data-2023-merged.csv').then(data => {
     const simulation = d3.forceSimulation()
         .force("center", d3.forceCenter().x(bubbleWidth / 2).y(bubbleHeight / 2))
         .force("charge", d3.forceManyBody().strength(5))
-        .force("collide", d3.forceCollide().strength(0.5).radius(d => size(d['Urban Population']) + 3).iterations(1));
+        .force("collide", d3.forceCollide().strength(0.2).radius(d => size(d['Urban Population']) + 3).iterations(1)); //
 
     // Update the positions after each tick of the simulation
     simulation

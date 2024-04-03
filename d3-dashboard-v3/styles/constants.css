@@ -17,13 +17,13 @@
 h1 {
     letter-spacing: 2px;
     font-weight: bold;
-    font-size: 31.5px;
+    font-size: 24px;
     width: 100%;
     color: var(--text-color-heading);
 }
 
 h2 {
-    font-size: 15px;
+    font-size: 12px;
     letter-spacing: 2px;
 }
 
@@ -31,7 +31,8 @@ h2 {
 h3 {
     letter-spacing: 1px;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
+    width: 80%;
     text-align: start;
     margin: 30px 0px 30px 30px;
     color: var(--secondary-text-color);

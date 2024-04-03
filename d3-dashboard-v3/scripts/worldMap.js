@@ -70,8 +70,8 @@ function clearCharts() {
 
 
 function createVisualization(geojsonData) {
-    const width = 960;
-    const height = 500;
+    const width = 840;
+    const height = 380;
     const padding = 20;     
 
     const mapContainer = d3.select("#visualization")

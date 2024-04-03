@@ -1,6 +1,7 @@
 // Function to display details in a separate panel or element
 function displayDetails(data) {
-    const detailsPanel = d3.select("#details-panel");
+    const detailsPanel = d3.select("#details-panel")
+        .style("font-size", "12px") //font size for the information displayed on the box
     detailsPanel.html(
         "Country: " + data.data.Country + "<br>" +
         "GDP: " + data.data.originalGDP + "<br>" +
@@ -12,7 +13,7 @@ function displayDetails(data) {
 // Set the dimensions and margins of the graph
 const Smargin = { top: 50, right: 20, bottom: 100, left: 40 },
     Swidth = 5000 - Smargin.left - Smargin.right,
-    Sheight = 400 - Smargin.top - Smargin.bottom;
+    Sheight = 300 - Smargin.top - Smargin.bottom;
 
 // Set the ranges
 const x = d3.scaleBand().rangeRound([0, 6000]),
@@ -89,7 +90,7 @@ d3.csv("data/world-data-2023.csv").then(data => {
         .style("text-anchor", "end")
         .attr("transform", "rotate(-35)")
         .attr("color","white")
-        .attr("font-size", "15px");
+        .attr("font-size", "12px");
 
     // Add the y-axis
     stackedsvg.append("g")
@@ -136,13 +137,7 @@ d3.csv("data/world-data-2023.csv").then(data => {
         });
         function getValueLabel(d) {
             console.log("Current Data (d):", d);
-        
-            // Check if the data object has the required fields
-            console.log("Country:", d.data.Country);
-            console.log("Total Tax Rate:", d.data.Total_tax_rate);
-            console.log("Tax Revenue:", d.data.Tax_revenue);
-            console.log("GDP:", d.data.originalGDP);
-        
+  
             // Round the difference between upper and lower bounds of the bar
             const barValue = Math.round(d[1] - d[0]);
         
@@ -164,11 +159,6 @@ d3.csv("data/world-data-2023.csv").then(data => {
                 }
             }
         
-            console.log("Bar Value:", barValue);
-            console.log("Data:", d.data);
-            console.log("Data Fields:", dataFields);
-            console.log("Data Field Values:", dataFields.map(field => d.data[field]));
-        
             // If no match is found within the tolerance range, return "Not Available"
             return "Not Available";
         }
@@ -178,7 +168,7 @@ d3.csv("data/world-data-2023.csv").then(data => {
 // Append a group for the legend
 const legend = stackedsvg.append("g")
     .attr("font-family", "sans-serif")
-    .attr("font-size", 10)
+    .attr("font-size", 7)
     .attr("text-anchor", "end")
     .selectAll("g")
     .data(Scolor.domain().slice().reverse())

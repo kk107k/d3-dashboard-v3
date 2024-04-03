@@ -18,8 +18,8 @@ const pieUnemploymentDataset = [
 let currentDataset = pieDataset; // Set the initial dataset
 
 // chart dimensions
-const pieWidth = 800;
-const pieHeight = 300;
+const pieWidth = 720; //increase to make chart go right
+const pieHeight = 170; //increase to make chart bigger
 
 // a circle chart needs a radius
 const pieRadius = Math.min(pieWidth, pieHeight) / 2;
@@ -126,7 +126,7 @@ function updateLegend(currentDataset) {
     .attr('class', 'legend')
     .attr('cursor', 'pointer')
     .style('fill', 'white')
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr('opacity', 0) // Start them as invisible
     .on('click', function(event, d) {
       currentDataset[d.index].enabled = !currentDataset[d.index].enabled;
@@ -153,7 +153,7 @@ function updateLegend(currentDataset) {
     .attr('transform', (d, i) => {
       const height = pieLegendRectSize + pieLegendSpacing;
       const offset = height * currentDataset.length / 2; // Adjust offset based on current dataset length
-      const horz = 9 * pieLegendRectSize; // MARGIN BETWEEN THE PIE CHART AND LEGEND
+      const horz = 5 * pieLegendRectSize; // MARGIN BETWEEN THE PIE CHART AND LEGEND
       const vert = i * height - offset;
       return `translate(${horz}, ${vert})`;
     });
@@ -167,8 +167,8 @@ function updateLegend(currentDataset) {
   // Update rectangles for both new and existing items
   pieSvg.selectAll('.legend rect')
     .data(currentDataset.map((d, i) => ({ label: d.label, index: i, enabled: d.enabled })), d => d.label)
-    .style('fill', d => d.enabled ? pieColor(d.label) : 'white')
-    .style('stroke', d => d.enabled ? pieColor(d.label) : '#aaa');
+    .style('fill', d => d.enabled ? pieColor(d.label) : 'red')
+    .style('stroke', d => d.enabled ? pieColor(d.label) : '#red');
 
   // Exit selection
   legendUpdate.exit()
@@ -187,7 +187,7 @@ const radioContainer = d3.select('#piechart')
 
 const radioGroup = radioContainer.append('div')
   .style('color', 'white')
-  .style("font-size", "20px")
+  .style("font-size", "15px")
   .style('margin', '20px 10px 0px 0px')
   .attr('id', 'radio-group');
 

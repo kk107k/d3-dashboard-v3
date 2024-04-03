@@ -1,7 +1,7 @@
 function renderBarChart(countryData) {
-    const width = 250;
-    const height = 170;
-    const margin = { top: 80, right: 20, bottom: 150, left: 150 }; // Increased left margin
+    const width = 200;
+    const height = 120;
+    const margin = { top: 90, right: 20, bottom: 150, left: 130 }; // Increased left margin
 
     const barsvg = d3.select("#bar-chart")
         .append("svg")
@@ -30,7 +30,7 @@ function renderBarChart(countryData) {
         .call(d3.axisBottom(x).ticks(5))
         .attr("color","white")
         .attr("opacity", 0.9)
-        .style("font-size", "15px")
+        .style("font-size", "13px")
         .style("font-weight", "100")
         .append("text")
         .attr("x", width / 2)
@@ -47,7 +47,7 @@ function renderBarChart(countryData) {
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
         .attr("fill", "#ffffff")
-        .attr("font-size", "14px")
+        .attr("font-size", "12px")
         .style("letter-spacing", "2px")
         .style("font-weight", "100");
 
@@ -85,10 +85,10 @@ function renderBarChart(countryData) {
         .attr("dy", "0.35em")
 
     barsvg.append("text")
-        .attr("x", -120)  //decrease y axis to take it more left 
-        .attr("y", -30) //decrease y axis to take it more up
+        .attr("x", -100)  //decrease y axis to take it more left 
+        .attr("y", -45) //decrease y axis to take it more up
         .attr("text-anchor", "start")
-        .style("font-size", "20px")
+        .style("font-size", "17px")
         .style("letter-spacing", "1px")
         .style("font-weight", "bold")
         .attr("fill", "#ffffff")

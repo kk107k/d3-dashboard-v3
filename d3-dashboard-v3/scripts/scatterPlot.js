@@ -1,7 +1,7 @@
 // Set the dimensions and margins of the graph
-const margins = { top: 40, right: 20, bottom: 60, left: 80 },
-    widths = 500 - margins.left - margins.right,
-    heights = 350 - margins.top - margins.bottom;
+const margins = { top: 10, right: 20, bottom: 60, left: 80 },
+    widths = 400 - margins.left - margins.right,
+    heights = 260 - margins.top - margins.bottom;
 
 // Append the scattersvg object to the body of the page
 const scattersvg = d3.select("#scatterplot")
@@ -29,8 +29,8 @@ d3.csv("./data/world-data-2023-merged.csv").then(function (data) {
         .append("text")
         .attr("class", "axis-label")
         .attr("y", 50)
-        .attr("text-anchor", "middle")
-        .style("font-size","15px")
+        .attr("text-anchor", "start")
+        .style("font-size","12px")
         .style("font-weight","100")
         .style("fill","white")
         .text("Birth Rate");

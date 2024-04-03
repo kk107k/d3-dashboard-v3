@@ -2,7 +2,6 @@ function RadarChart(id, data, options) {
     var cfg = {
         w: 400,                // Width of the circle
         h: 400,                // Height of the circle
-        margin: { top: 20, right: 20, bottom: 20, left: 20 }, // The margins of the SVG
         levels: 3,             // How many levels or inner circles should there be drawn
         maxValue: 1,           // What is the value that the biggest circle will represent
         labelFactor: 1.25,     // How much farther than the radius of the outer circle should the labels be placed
@@ -47,8 +46,8 @@ function RadarChart(id, data, options) {
         .attr("class", "radar" + id);
 
     // Append a g element
-    var g = svg.append("g")
-        .attr("transform", `translate(${cfg.w / 2 + cfg.margin.left}, ${cfg.h / 2 + cfg.margin.top})`);
+    var g = svg.append("g") // Move the chart
+        .attr("transform", `translate(${cfg.w / 2.5 + cfg.margin.left}, ${cfg.h / 2 + cfg.margin.top})`);
 
     // Create the radial line generator
     var radarLine = d3.lineRadial()
@@ -107,7 +106,6 @@ function RadarChart(id, data, options) {
     // Append the labels at each axis
     axes.append("text")
         .style("fill", "#ffffff") //TO COLOR THE TEXT FOR AXIS
-
         .attr("class", "legend")
         .style("font-size", "11px")
         .attr("text-anchor", "middle")
@@ -212,9 +210,9 @@ function RadarChart(id, data, options) {
     // This could include highlighting specific aspects of the data on hover,
     // or adding more detailed interactions specific to your application's needs.
 }
-var margin = { top: 50, right: 80, bottom: 100, left: 80 },
-    width = Math.min(400, window.innerWidth - 10) - margin.left - margin.right,
-    height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+var margin = { top: 30, right: 120, bottom: 60, left: 120 }, // resize the chart
+    width = Math.min(400, window.innerWidth) - margin.left - margin.right,
+    height = Math.min(width, window.innerHeight - margin.top - margin.bottom );
 
 // Placeholder for radar chart options
 var radarChartOptions = {
