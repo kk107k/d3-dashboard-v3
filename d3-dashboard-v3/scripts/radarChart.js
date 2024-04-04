@@ -85,7 +85,7 @@ function RadarChart(id, data, options) {
         .attr("fill", "#737373")
         .style("fill", "#ffffff") //TO COLOR THE TEXT FOR PERCENTAGE
         .text(d => Format(maxValue * d / cfg.levels));
-        
+
     // Draw the axes
     var axes = axisGrid.selectAll(".axis")
         .data(allAxis)
@@ -109,11 +109,26 @@ function RadarChart(id, data, options) {
         .attr("class", "legend")
         .style("font-size", "11px")
         .attr("text-anchor", "middle")
-        .attr("dy", "0.35em")
-        .attr("x", (d, i) => rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("y", (d, i) => rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2))
+        .attr("dy", (d) => {
+            if (d === "Unemployment Rate") {
+                return "1.25em"; // Adjust the dy value for "Unemployment Rate" axis
+            } else {
+                return "0.35em";
+            }
+        })
+        .attr("x", (d, i) => {
+            const marginLeft = d === "Unemployment Rate" ? -35 : 0; // Add margin left for "Unemployment Rate" axis
+            const marginRight = d === "Life Expectancy" ? -20 : 0; // Add margin right for "Life Expectancy" axis
+            return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2) + marginLeft - marginRight;
+        })
+        .attr("y", (d, i) => {
+            const marginBottom = d === "Unemployment Rate" ? -25 : 0; // Add margin down for "Unemployment Rate" axis
+            return rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2) + marginBottom;
+        })
         .text(d => d)
         .call(wrap, cfg.wrapWidth);
+
+
 
     // Create the blobs
     var blobs = g.selectAll(".radarWrapper")
@@ -193,18 +208,18 @@ function RadarChart(id, data, options) {
     // Optional: Implement the tooltip's visibility on circle hover
     // This assumes your data includes meaningful 'value' fields for tooltips.
     blobs.selectAll(".radarCircle")
-    .on('mouseover', function (event, d) {
-        tooltip
-            .style("left", event.pageX + "px")
-            .style("top", event.pageY + "px")
-            .text(Format(d.value))
-            .style("opacity", 1)
-            .text(d.displayValue);
+        .on('mouseover', function (event, d) {
+            tooltip
+                .style("left", event.pageX + "px")
+                .style("top", event.pageY + "px")
+                .text(Format(d.value))
+                .style("opacity", 1)
+                .text(d.displayValue);
 
-    })
-    .on('mouseout', function () {
-        tooltip.style("opacity", 0);
-    });
+        })
+        .on('mouseout', function () {
+            tooltip.style("opacity", 0);
+        });
 
     // Optional: Implement additional interactions or visual enhancements
     // This could include highlighting specific aspects of the data on hover,
@@ -212,7 +227,7 @@ function RadarChart(id, data, options) {
 }
 var margin = { top: 30, right: 120, bottom: 60, left: 120 }, // resize the chart
     width = Math.min(400, window.innerWidth) - margin.left - margin.right,
-    height = Math.min(width, window.innerHeight - margin.top - margin.bottom );
+    height = Math.min(width, window.innerHeight - margin.top - margin.bottom);
 
 // Placeholder for radar chart options
 var radarChartOptions = {
@@ -242,21 +257,45 @@ d3.csv("./data/world-data-2023-merged.csv").then(function (data) {
         color: color(d.Country)
     }));
 
+
     console.log(processedData);
     // Initialize the radar chart with processed data
     RadarChart(".radarChart", processedData, radarChartOptions);
 
     // Initialize Select2 for country selection
     var select = $('<select multiple="multiple"></select>').appendTo('#countrySelector');
+
+    // Add placeholder option
+    select.append($('<option disabled selected value="">Select a Country</option>'));
+
+    // Append data options
     data.forEach(function (d) {
         select.append($('<option></option>').attr("value", d.Country).text(d.Country));
     });
-    $(select).select2({ width: 'resolve' });
+
+    // Initialize Select2
+    $(select).select2({
+        width: 'resolve',
+        placeholder: "Select a Country" // Set Select2 placeholder text
+    });
 
     // Update radar chart based on selection
     $(select).on('change', function () {
         var selectedCountries = $(this).val();
-        var selectedData = processedData.filter(d => selectedCountries.includes(d.name));
-        RadarChart(".radarChart", selectedData, radarChartOptions);
+        if (selectedCountries && selectedCountries.length > 0) {
+            // Remove placeholder option if it's selected
+            if ($(this).val() !== '') {
+                $(this).find('option[value=""]').remove();
+            }
+
+            var selectedData = processedData.filter(d => selectedCountries.includes(d.name));
+            RadarChart(".radarChart", selectedData, radarChartOptions);
+        } else {
+            // Display original chart when no country is selected
+            RadarChart(".radarChart", processedData, radarChartOptions);
+        }
     });
+
+
+
 });

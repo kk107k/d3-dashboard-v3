@@ -122,6 +122,4 @@ d3.csv('data/world-data-2023-merged.csv').then(data => {
                 .attr("cy", d => d.y);
         });
 
-    // Call the bubble chart
-    bubbleChart(bubbleData);
 });

@@ -10,6 +10,9 @@ function displayDetails(data) {
     );
 }
 
+
+
+
 // Set the dimensions and margins of the graph
 const Smargin = { top: 50, right: 20, bottom: 100, left: 40 },
     Swidth = 5000 - Smargin.left - Smargin.right,
@@ -165,24 +168,25 @@ d3.csv("data/world-data-2023.csv").then(data => {
         
 });
 
-// Append a group for the legend
-const legend = stackedsvg.append("g")
-    .attr("font-family", "sans-serif")
-    .attr("font-size", 7)
-    .attr("text-anchor", "end")
-    .selectAll("g")
+// Append a group for the legend to a separate SVG element
+const legendSvg = d3.select("#legend-panel").append("svg")
+    .attr("width", 150) // Adjust width according to your need
+    .attr("height", 70); // Adjust height according to your need
+
+const legend = legendSvg.selectAll("g")
     .data(Scolor.domain().slice().reverse())
     .enter().append("g")
-    .attr("transform", (d, i) => "translate(0," + i * 20 + ")");
+    .attr("transform", (d, i) => "translate(20," + i * 20 + ")");
 
 legend.append("rect")
-    .attr("x", Swidth - 19)
+    .attr("x", 0)
     .attr("width", 19)
     .attr("height", 19)
     .attr("fill", Scolor);
 
 legend.append("text")
-    .attr("x", Swidth - 24)
+    .attr("x", 24)
     .attr("y", 9.5)
     .attr("dy", "0.32em")
     .text(d => d);
+

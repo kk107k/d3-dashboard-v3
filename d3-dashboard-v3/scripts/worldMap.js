@@ -70,7 +70,7 @@ function clearCharts() {
 
 
 function createVisualization(geojsonData) {
-    const width = 840;
+    const width = 800;
     const height = 380;
     const padding = 20;     
 
