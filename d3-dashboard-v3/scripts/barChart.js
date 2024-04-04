@@ -1,15 +1,18 @@
 function renderBarChart(countryData) {
+    // Set the dimensions for the chart
     const width = 200;
     const height = 120;
     const margin = { top: 90, right: 20, bottom: 150, left: 130 }; // Increased left margin
 
+    // Create the SVG container for the bar chart
     const barsvg = d3.select("#bar-chart")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
-        
+
+    // Create the x and y scales
     const x = d3.scaleLinear()
         .range([0, width]);
 
@@ -17,27 +20,31 @@ function renderBarChart(countryData) {
         .range([height, 0])
         .padding(0.2);
 
+    // Prepare the data
     const data = [
         { label: "Fertility Rate", value: countryData.fertilityRate },
         { label: "Birth Rate", value: countryData.birthRate }
     ];
 
-    // Check if countryData is NaN
+    // Check if countryData has missing values
     if (isNaN(countryData.fertilityRate) || isNaN(countryData.birthRate)) {
+        // If there are missing values, display a message
         barsvg.append("text")
-            .attr("x", width / 2 +47)
+            .attr("x", width / 2 + 47)
             .attr("text-anchor", "end")
             .style("font-size", "18px")
             .style("fill", "white")
             .text(`No data available for ${countryData.name}`);
     } else {
+        // Set the domains for the x and y scales
         x.domain([0, d3.max(data, d => d.value)]);
         y.domain(data.map(d => d.label));
 
+        // Render the x-axis
         barsvg.append("g")
             .attr("transform", `translate(0, ${height})`)
             .call(d3.axisBottom(x).ticks(5))
-            .attr("color","white")
+            .attr("color", "white")
             .attr("opacity", 0.9)
             .style("font-size", "13px")
             .style("font-weight", "100")
@@ -47,9 +54,10 @@ function renderBarChart(countryData) {
             .attr("text-anchor", "middle")
             .text("Value");
 
+        // Render the y-axis
         barsvg.append("g")
             .call(d3.axisLeft(y))
-            .attr("color","white")
+            .attr("color", "white")
             .attr("opacity", 0.9)
             .selectAll("text")
             .style("text-anchor", "end")
@@ -60,6 +68,7 @@ function renderBarChart(countryData) {
             .style("letter-spacing", "2px")
             .style("font-weight", "100");
 
+        // Render the bars
         barsvg.selectAll(".bar")
             .data(data)
             .enter().append("rect")
@@ -70,6 +79,7 @@ function renderBarChart(countryData) {
             .attr("width", d => x(d.value))
             .attr("fill", "#4292c6")
             .on("mouseover", function (event, d) {
+                // Show a tooltip on mouseover
                 const tooltip = d3.select(".tooltip");
                 tooltip.transition()
                     .duration(200)
@@ -79,12 +89,14 @@ function renderBarChart(countryData) {
                     .style("top", event.pageY - 28 + "px");
             })
             .on("mouseout", function () {
+                // Hide the tooltip on mouseout
                 d3.select(".tooltip")
                     .transition()
                     .duration(500)
                     .style("opacity", 0);
             });
 
+        // Render the bar labels
         barsvg.selectAll(".bar-label")
             .data(data)
             .enter().append("text")
