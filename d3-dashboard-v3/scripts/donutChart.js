@@ -1,6 +1,6 @@
 function renderDonutChart(countryData) {
-    const width = 350;
-    const height = 250;
+    const width = 550;
+    const height = 350;
     const radius = Math.min(width, height) / 2 - 20;
     const donutChartContainer = d3.select("#donut-chart")
     .style("display", "flex")
@@ -12,17 +12,17 @@ function renderDonutChart(countryData) {
 
     const donutsvg = donutChartContainer
         .append("svg")
-        .attr("width", "100%")
+        .attr("width", "700px")
         .attr("height", "100%")
         .attr("viewBox", `0 0 ${width} ${height}`)
         .attr("preserveAspectRatio", "xMinYMin meet")
         .append("g")
-        .attr("transform", `translate(${width / 2}, ${height / 2})`);
+        .attr("transform", `translate(${width / 2 + 10}, ${height / 2 +20})`);
 
     const data = [
-        { label: "Agricultural Land", value: countryData.agriculturalLand * 100 },
-        { label: "Forested Area", value: countryData.forestedLand * 100 },
-        { label: "Urbanized Land", value: (100 - (countryData.forestedLand * 100) - (countryData.agriculturalLand* 100)) }
+        { label: "Agricultural", value: countryData.agriculturalLand * 100 },
+        { label: "Forested", value: countryData.forestedLand * 100 },
+        { label: "Urban", value: (100 - (countryData.forestedLand * 100) - (countryData.agriculturalLand* 100)) }
         
     ];
     console.log(data);
@@ -48,7 +48,7 @@ function renderDonutChart(countryData) {
     const slices = donutsvg.selectAll(".slice")
         .data(data_ready)
         .enter().append("g")
-        .attr("class", "slice");
+        .attr("class", "slice")
 
     slices.append("path")
         .attr("d", arcGenerator)
@@ -70,56 +70,65 @@ function renderDonutChart(countryData) {
                 .duration(500)
                 .style("opacity", 0);
         });
+        // Append arcs and text
 
-    slices.append("polyline")
+        // Append polyline after arcs and text
+        slices.append("polyline")
         .attr("stroke", "red")
         .style("fill", "none")
         .attr("stroke-width", 3)
         .attr('points', function (d) {
-            const posA = arcGenerator.centroid(d);
-            const posB = outerArc.centroid(d);
-            const posC = outerArc.centroid(d);
+            const posA = arcGenerator.centroid(d); // Center of the arc
+            const posB = outerArc.centroid(d); // Point on the outer radius
             const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-            posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1);
+            const posC = [
+                radius * 1.1 * (midangle < Math.PI ? 1 : -1), // X-coordinate
+                posB[1] // Y-coordinate same as the outer arc
+            ];
             return [posA, posB, posC];
         });
 
-    slices.append("text")
+    
+    
+
+        slices.append("text")
         .style("fill", "white")
-        .style("font-size", "30px")
+        .style("font-size", "40px")
+        .style("z-index", "100")
         .text(d => `${Math.round(d.data.value)}%`)
         .attr('transform', function (d) {
             const pos = outerArc.centroid(d);
-            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-            pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 ;
+            // Adjust the radius multiplier below to move the text further away
+            pos[0] = radius * 1.2 * (midangle < Math.PI ? 1 : -1);
             return `translate(${pos})`;
         })
         .style('text-anchor', function (d) {
-            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
+            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 ;
             return (midangle < Math.PI ? 'start' : 'end');
         });
+      
 
     // Add legend
     const legendContainer = donutChartContainer.append("div")
         .attr("class", "legend-container")
+        .attr("style", "margin-left: 20px")
 
     const legend = legendContainer.selectAll(".legend")
         .data(data)
         .enter().append("div")
         .attr("class", "legend")
-        .style("display", "flex")
         .style("color", "white")
-        .style("align-items", "center")
-        .style("margin-bottom", "5px")
-        .style("margin-right", "30px")
+        .style("text-align", "start")
+        .style("font-size", "12px")
 
     legend.append("div")
-        .style("width", "18px")
-        .style("color", "white")
-        .style("height", "18px")
+        .attr("class", "donutlegend")
+        .style("width", "20px")
+        .style("height", "20px")
         .style("background-color", d => color(d.label));
 
     legend.append("span")
-        .style("margin-left", "5px")
+        .style("margin-left", "10px") //move text of legend away from the indicators
         .text(d => d.label);
 }

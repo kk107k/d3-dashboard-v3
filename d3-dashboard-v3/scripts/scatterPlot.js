@@ -30,7 +30,7 @@ scatterSvg.append("defs").append("clipPath")
 
 // Define zoom behavior
 const zoom = d3.zoom()
-    .scaleExtent([1, 10])
+    .scaleExtent([1, 1000])
     .on("zoom", zoomed);
 
 // Add X axis and assign class for later selection
@@ -38,12 +38,12 @@ scatterSvg.append("g")
     .attr("class", "x-axis")
     .attr("transform", `translate(0, ${heights})`)
     .call(d3.axisBottom(sx))
-    .attr("color","white");
+    .attr("color", "white");
 scatterSvg.append("text")
     .attr("class", "x-axis-label")
-    .style("font-size","15px")
-    .style("font-weight","100")
-    .style("fill","white")
+    .style("font-size", "15px")
+    .style("font-weight", "100")
+    .style("fill", "white")
     .attr("text-anchor", "middle")
     .attr("x", widths / 2)
     .attr("y", heights + margins.bottom - 15) // Adjust position as needed
@@ -53,13 +53,13 @@ scatterSvg.append("text")
 scatterSvg.append("g")
     .attr("class", "y-axis")
     .call(d3.axisLeft(sy))
-    .attr("color","white");
+    .attr("color", "white");
 scatterSvg.append("text")
     .attr("class", "y-axis-label")
     .attr("text-anchor", "middle")
-    .style("font-size","15px")
-    .style("font-weight","100")
-    .style("fill","white")
+    .style("font-size", "15px")
+    .style("font-weight", "100")
+    .style("fill", "white")
     .attr("transform", "rotate(-90)")
     .attr("x", -heights / 2)
     .attr("y", -margins.left + 22) // Adjust position as needed
@@ -79,6 +79,11 @@ function zoomed(event) {
     scatterSvg.selectAll("circle")
         .attr('cx', d => new_sxScale(d['Birth Rate']))
         .attr('cy', d => new_syScale(d['Life expectancy']));
+
+    // Update invisible rectangles based on new scales
+    scatterSvg.selectAll(".zoom-area")
+        .attr("x", d => new_sxScale(d['Birth Rate']) - 10) // Adjust the size of the zoom area
+        .attr("y", d => new_syScale(d['Life expectancy']) - 10); // Adjust the size of the zoom area
 }
 
 // Define the div for the tooltip
@@ -96,14 +101,27 @@ d3.csv("./data/world-data-2023.csv").then(function (data) {
         .attr("clip-path", "url(#clip)") // Apply the clip path here
         .attr("class", "dots");
 
+    // Add invisible rectangles for zoom interaction areas
+    dotsGroup.selectAll(".zoom-area")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class", "zoom-area")
+        .attr("x", d => sx(d['Birth Rate']) - 10) // Adjust the size of the zoom area
+        .attr("y", d => sy(d['Life expectancy']) - 10) // Adjust the size of the zoom area
+        .attr("width", 100) // Adjust the size of the zoom area
+        .attr("height", 100) // Adjust the size of the zoom area
+        .style("fill", "transparent") // Make the rectangle invisible
+        .style("pointer-events", "all") // Make the rectangle capture mouse events
+
     // Add dots
-    dotsGroup.selectAll("dot")
+    dotsGroup.selectAll("circle")
         .data(data)
         .enter()
         .append("circle")
         .attr("cx", d => sx(d['Birth Rate']))
         .attr("cy", d => sy(d['Life expectancy']))
-        .attr("r", 7)
+        .attr("r", 6) 
         .style("fill", "#BFF5FF")
         .style("opacity", .4)
         .on("mouseover", function (event, d) {

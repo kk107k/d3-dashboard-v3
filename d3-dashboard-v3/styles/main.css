@@ -199,10 +199,6 @@ body {
 /* End of Fourth row */
  
 
-.legend {
-    font-family: 'Raleway', sans-serif;
-    fill: #333333;
-}
 .tooltip {
     fill: #333333;
 }
@@ -371,6 +367,7 @@ body {
 /* } */
 
 
+
 /* Center the SVG container */
 #choropleth-map svg {
     display: block;
@@ -451,13 +448,19 @@ body {
 }
 
 .legend-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+    width: 320px;
 }
 
-#bar-chart {
+.donutlegend {
+    border-radius: 20px;
+}
+
+.legend {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin-top: 10px;
 }
 
 
