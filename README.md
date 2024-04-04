@@ -46,4 +46,4 @@ This project is a demonstration of the capabilities of modern web technologies i
 
 ## Gitlab Link
 
-https://gitlab-student.macs.hw.ac.uk/f21dv-2023-24/f20dv-group-project
+https://gitlab-student.macs.hw.ac.uk/ba2009/f20dv-group-project
