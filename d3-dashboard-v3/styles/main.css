@@ -180,16 +180,20 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 50px 0px;
+    margin: 20px 0px;
 }
 
 .main_container_fifth_row_left,
 .main_container_fifth_row_middle,
 .main_container_fifth_row_right {
-    width: 470px;
+    width: 420px;
     height: 400px;
     border-radius: 10px;
     background-color: var(--secondary-color);
+}
+
+.main_container_fifth_row_right {
+    width: 350px;
 }
 
 /* Stacked Bar Chart styling */
@@ -516,3 +520,17 @@ body {
     width: 80px;
     z-index: 10;
   }
+
+
+  /* Define animation */
+  @keyframes count {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.animated {
+    animation: count 2s ease-in-out;
+}

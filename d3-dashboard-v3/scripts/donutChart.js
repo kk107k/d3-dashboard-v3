@@ -10,6 +10,21 @@ function renderDonutChart(countryData) {
     // Clear previous chart and legend
     donutChartContainer.selectAll("*").remove();
 
+    
+    // Check if countryData is NaN
+    if (isNaN(countryData.agriculturalLand) || isNaN(countryData.forestedLand)) {
+        donutChartContainer.append("div")
+            .text(`No data available for ${countryData.name}`)
+            .style("color", "white")
+            .style("font-size", "18px")
+            .style("margin-left", "22px")
+            .style("margin-top", "30px")
+            .style("background-color", "#00a7e1")
+            .style("padding", "22px")
+            .style("border-radius" , "10px")
+        return; // Exit function if there's no data
+    }
+
     const donutsvg = donutChartContainer
         .append("svg")
         .attr("width", "700px")
@@ -25,6 +40,9 @@ function renderDonutChart(countryData) {
         { label: "Urban", value: (100 - (countryData.forestedLand * 100) - (countryData.agriculturalLand* 100)) }
         
     ];
+
+   
+
     console.log(data);
 
     const pie = d3.pie().value(d => d.value);
@@ -131,4 +149,6 @@ function renderDonutChart(countryData) {
     legend.append("span")
         .style("margin-left", "10px") //move text of legend away from the indicators
         .text(d => d.label);
+
 }
+
