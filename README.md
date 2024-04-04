@@ -43,3 +43,7 @@ Interact with the visualizations directly through the web interface:
 - **GeoJSON Data**: For geographical features utilized in map visualizations.
 
 This project is a demonstration of the capabilities of modern web technologies in making data visualization interactive and engaging. Through the exploration of various datasets, it provides valuable insights into world data trends.
+
+## Gitlab Link
+
+https://gitlab-student.macs.hw.ac.uk/f21dv-2023-24/f20dv-group-project
