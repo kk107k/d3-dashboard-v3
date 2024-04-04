@@ -1,7 +1,7 @@
 console.log("scatterPlot.js loaded");
 
 // Set the dimensions and margins of the graph
-const margins = { top: 10, right: 15, bottom: 60, left: 60 },
+const margins = { top: 20, right: 15, bottom: 60, left: 60 },
     widths = 470 - margins.left - margins.right,
     heights = 260 - margins.top - margins.bottom;
 

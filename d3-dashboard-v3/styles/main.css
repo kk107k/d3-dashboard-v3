@@ -150,7 +150,7 @@ body {
 
 .main_container_fourth_row_left {
     width: 860px;
-    height: 400px;
+    height: 422px;
     border-radius: 10px;
     background-color: var(--secondary-color);
     overflow-y: hidden;
@@ -165,7 +165,7 @@ body {
 
 .main_container_fourth_row_right {
     width: 350px;
-    height: 400px;
+    height: 422px;
     border-radius: 10px;
     background-color: var(--secondary-color);
  
@@ -202,6 +202,7 @@ body {
 
 /* End of Fourth row */
  
+/* Utils */
 
 .tooltip {
     fill: #333333;
@@ -493,7 +494,7 @@ body {
 
 ::-webkit-scrollbar {
     width: 10px; 
-    height: 1px;
+    height: 5px;
   }
   
   ::-webkit-scrollbar-thumb {

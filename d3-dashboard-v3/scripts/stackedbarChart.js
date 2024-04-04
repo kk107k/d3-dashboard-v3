@@ -171,22 +171,27 @@ d3.csv("data/world-data-2023.csv").then(data => {
 // Append a group for the legend to a separate SVG element
 const legendSvg = d3.select("#legend-panel").append("svg")
     .attr("width", 150) // Adjust width according to your need
-    .attr("height", 70); // Adjust height according to your need
+    .attr("height", 110); // Adjust height according to your need
 
-const legend = legendSvg.selectAll("g")
+    const legend = legendSvg.selectAll("g")
     .data(Scolor.domain().slice().reverse())
     .enter().append("g")
-    .attr("transform", (d, i) => "translate(20," + i * 20 + ")");
+    .attr("transform", (d, i) => "translate(20," + (i * 25 + 35) + ")"); // Adjust the translation here
+
 
 legend.append("rect")
     .attr("x", 0)
     .attr("width", 19)
     .attr("height", 19)
+    .style("rx", "2px")
     .attr("fill", Scolor);
 
-legend.append("text")
+    legend.append("text")
     .attr("x", 24)
     .attr("y", 9.5)
+    .attr("fill", "white")
     .attr("dy", "0.32em")
-    .text(d => d);
-
+    .text(d => {
+        // Replace underscores with spaces and capitalize first letter of each word
+        return d.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    });
