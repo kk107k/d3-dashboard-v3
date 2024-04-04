@@ -32,8 +32,12 @@ h3 {
     font-size: 17px;
     width: 80%;
     text-align: start;
-    margin: 22px 0px 30px 22px;
+    margin: 22px 0px 10px 22px;
     color: var(--secondary-text-color);
+}
+
+#special_h3 {
+    margin-bottom: 30px;
 }
 
 #main_container_second_row_right_top_title {
