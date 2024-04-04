@@ -1,113 +1,132 @@
-console.log("Scatter loaded");
+// Script to create a World Choropleth Map displaying population data with interactions and a legend
+// Load the GeoJSON data for country boundaries
+d3.json('world-countries.geo.json').then(function (geojsonData) {
+    // Load your population data
+    d3.csv('world-data-2023.csv').then(function (populationData) {
+        // Create a map of country names to population for easier lookup
+        let populationLookup = {};
+        populationData.forEach(function (row) {
+            populationLookup[row.Country] = +row.Population.replace(/,/g, ''); // Convert to number
+        });
 
-// Set the dimensions and margins of the graph
-const margins = { top: 40, right: 20, bottom: 60, left: 80 },
-    widths = 960 - margins.left - margins.right,
-    heights = 500 - margins.top - margins.bottom;
+        // After processing the CSV:
+        geojsonData.features.forEach(function (feature) {
+            const populationValue = populationLookup[feature.properties.name];
+            // Assign the population value only if it's a number; otherwise, leave it as undefined
+            feature.properties.population = isNaN(populationValue) ? undefined : populationValue;
+        });
 
-// Define scales outside of the CSV callback
-const xs = d3.scaleLinear()
-    .domain([0, 50])
-    .range([0, widths]);
-const ys = d3.scaleLinear()
-    .domain([0, 90])
-    .range([heights, 0]);
+        // Now that we have the merged data, create the map
+        createMap(geojsonData);
+    });
+});
 
-// Append the scattersvg object to the body of the page
-const scattersvg = d3.select("#scatterplot")
-    .append("svg")
-    .attr("width", widths + margins.left + margins.right)
-    .attr("height", heights + margins.top + margins.bottom)
-    .append("g")
-    .attr("transform", `translate(${margins.left},${margins.top})`);
+function createMap(geojsonData) {
+    const width = 960;
+    const height = 600;
+    const padding = 20; 
 
-// Define a clipping path with the same dimensions as the graph area
-scattersvg.append("defs").append("clipPath")
-    .attr("id", "clip")
-    .append("rect")
-    .attr("width", widths)
-    .attr("height", heights);
+    const svg = d3.select("#choropleth-map").append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
-// Define zoom behavior
-const zoom = d3.zoom()
-    .scaleExtent([1, 10])
-    .on("zoom", zoomed);
+    const projection = d3.geoMercator()
+        .scale(width / (2 * Math.PI))
+        .translate([width / 2, height / 2]);
 
-// Add X axis and assign class for later selection
-scattersvg.append("g")
-    .attr("class", "x-axis")
-    .attr("transform", `translate(0, ${heights})`)
-    .call(d3.axisBottom(xs));
-scattersvg.append("text")
-    .attr("class", "x-axis-label")
-    .attr("text-anchor", "middle")
-    .attr("x", widths / 2)
-    .attr("y", heights + margins.bottom - 10) // Adjust position as needed
-    .text("Birth Rate");
+    const path = d3.geoPath().projection(projection);
 
-// Add Y axis and assign class for later selection
-scattersvg.append("g")
-    .attr("class", "y-axis")
-    .call(d3.axisLeft(ys));
-scattersvg.append("text")
-    .attr("class", "y-axis-label")
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
-    .attr("x", -heights / 2)
-    .attr("y", -margins.left + 20) // Adjust position as needed
-    .text("Life Expectancy");
+    // Define the zoom behavior
+    var zoom = d3.zoom()
+        .scaleExtent([1, 8])
+        .on('zoom', (event) => {
+            svg.selectAll('path').attr('transform', event.transform);
+        });
 
-// Define the zoomed function
-function zoomed(event) {
-    // Create new scale objects based on event
-    const new_xScale = event.transform.rescaleX(x);
-    const new_yScale = event.transform.rescaleY(y);
+    svg.call(zoom);
 
-    // Update axes with these new scales
-    scattersvg.select(".x-axis").call(d3.axisBottom(new_xScale));
-    scattersvg.select(".y-axis").call(d3.axisLeft(new_yScale));
+    const populationScale = d3.scaleThreshold()
+        .domain([1, 100000, 1000000, 10000000, 50000000, 250000000, 500000000])
+        .range([
+            "#deebf7",
+            "#c6dbef",
+            "#9ecae1",
+            "#6baed6",
+            "#4292c6",
+            "#2171b5",
+            "#08519c",
+            "#08306b"  
+        ]);
 
-    // Update circle positions based on new scales
-    scattersvg.selectAll("circle")
-        .attr('cx', d => new_xScale(d['Birth Rate']))
-        .attr('cy', d => new_yScale(d['Life expectancy']));
-}
+    const tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
-// Define the div for the tooltip
-const tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-
-// Attach zoom behavior to the scattersvg
-scattersvg.call(zoom);
-
-// Read the data
-d3.csv("./data/world-data-2023.csv").then(function (data) {
-    // Apply the clipping path to the group where the dots will be added
-    const dotsGroup = scattersvg.append('g')
-        .attr("clip-path", "url(#clip)") // Apply the clip path here
-        .attr("class", "dots");
-
-    // Add dots
-    dotsGroup.selectAll("dot")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("cx", d => x(d['Birth Rate']))
-        .attr("cy", d => y(d['Life expectancy']))
-        .attr("r", 5)
-        .style("fill", "#69b3a2")
+    svg.selectAll("path")
+        .data(geojsonData.features)
+        .enter().append("path")
+        .attr("d", path)
+        .attr("fill", function (d) {
+            if (d.properties.population === undefined) {
+                return "#000000"; 
+            } else if (d.properties.population < 100000) {
+                return "#deebf7";
+            } else {
+                return populationScale(d.properties.population);
+            }
+        })
+        .attr("stroke", "#fff")
         .on("mouseover", function (event, d) {
+            const populationText = d.properties.population !== undefined
+                ? `Population: ${d3.format(",")(d.properties.population)}`
+                : "Population: undefined";
             tooltip.transition()
                 .duration(200)
                 .style("opacity", .9);
-            tooltip.html("Country: " + d.Country + "<br/>Birth Rate: " + d['Birth Rate'] + "<br/>Life Expectancy: " + d['Life expectancy'])
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 15) + "px");
+            tooltip.html(`${d.properties.name}<br>${populationText}`)
+                .style("left", (event.pageX) + "px")
+                .style("top", (event.pageY - 28) + "px");
         })
         .on("mouseout", function (d) {
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
         });
-});
+
+    const legendDiv = d3.select("#map-legend");
+
+    const legendRanges = [0, 100000, 1000000, 10000000, 50000000, 250000000, 500000000];
+    const legendTexts = [
+        "0 – 100k",
+        "100k - 1M",
+        "1M – 10M",
+        "10M – 50M",
+        "50M – 250M",
+        "250M - 500M",
+        "500M+"
+    ];
+
+    legendDiv.selectAll("div")
+        .data(legendRanges)
+        .enter().append("div")
+        .style("display", "flex")
+        .style("align-items", "center")
+        .html(function (d, i) {
+            var color = populationScale(d);
+            var nextDomain = (i < legendRanges.length - 1) ? populationScale.domain()[i + 1] : null;
+            var text = nextDomain ? `${d3.format(".1s")(d)} - ${d3.format(".1s")(nextDomain)}` : `${d3.format(".1s")(d)}+`;
+
+            return `<div style="width: 20px; height: 20px; background-color: ${color};"></div>` +
+                `<span style="margin-left: 5px;">${text}</span>`;
+        });
+
+    // Reset Zoom Functionality
+    function resetZoom() {
+        svg.transition()
+            .duration(750)
+            .call(zoom.transform, d3.zoomIdentity); // Reset zoom
+    }
+
+    // Adding Reset Zoom Event Listener
+    d3.select("#reset-zoom").on("click", resetZoom);
+}

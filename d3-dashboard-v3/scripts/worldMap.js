@@ -58,7 +58,7 @@ d3.json('./data/world-countries.geo.json').then(function (geojsonData) {
 
 
 
-const legendDiv = d3.select("#map-legend");
+const maplegendDiv = d3.select("#map-legend");
 let lastHoveredCountry = null;
 
 // A function to clear charts
@@ -156,38 +156,40 @@ function createVisualization(geojsonData) {
         });
 
 
-    const legendRanges = [0, 100000, 1000000, 10000000, 50000000, 250000000, 500000000];
-    const legendTexts = [
-        "0 – 100k",
-        "100k - 1M",
-        "1M – 10M",
-        "10M – 50M",
-        "50M – 250M",
-        "250M - 500M",
-        "500M+"
-    ];
+        const maplegendDiv = d3.select("#map-legend");
 
-    legendDiv.selectAll("div")
-        .data(legendRanges)
-        .enter().append("div")
-        .style("display", "flex")
-        .style("align-items", "center")
-        .html(function (d, i) {
-            var color = populationScale(d);
-            var nextDomain = (i < legendRanges.length - 1) ? populationScale.domain()[i + 1] : null;
-            var text = nextDomain ? `${d3.format(".1s")(d)} - ${d3.format(".1s")(nextDomain)}` : `${d3.format(".1s")(d)}+`;
-
-            return `<div style="width: 20px; height: 20px; background-color: ${color};"></div>` +
-                `<span style="margin-left: 5px;">${text}</span>`;
-        });
-
-    // Reset Zoom Functionality
-    function resetZoom() {
-        mapContainer.transition()
-            .duration(750)
-            .call(zoom.transform, d3.zoomIdentity); // Reset zoom
+        const maplegendRanges = [0, 100000, 1000000, 10000000, 50000000, 250000000, 500000000];
+        const maplegendTexts = [
+            "0 – 100k",
+            "100k - 1M",
+            "1M – 10M",
+            "10M – 50M",
+            "50M – 250M",
+            "250M - 500M",
+            "500M+"
+        ];
+    
+        maplegendDiv.selectAll("div")
+            .data(maplegendRanges)
+            .enter().append("div")
+            .style("display", "flex")
+            .html(function (d, i) {
+                var color = populationScale(d);
+                var nextDomain = (i < maplegendRanges.length - 1) ? populationScale.domain()[i + 1] : null;
+                var text = nextDomain ? `${d3.format(".1s")(d)} - ${d3.format(".1s")(nextDomain)}` : `${d3.format(".1s")(d)}+`;
+    
+                return `<div style="width: 20px; height: 20px; background-color: ${color}; border-radius: 2px;"></div>` +
+                    `<span style="margin-left: 10px;">${text}</span>`;
+            });
+    
+        // Reset Zoom Functionality
+        function resetZoom() {
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity); // Reset zoom
+        }
+    
+        // Adding Reset Zoom Event Listener
+        d3.select("#reset-zoom").on("click", resetZoom);
     }
-
-    // Adding Reset Zoom Event Listener
-    d3.select("#reset-zoom").on("click", resetZoom);
-}
+    

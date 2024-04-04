@@ -401,15 +401,11 @@ body {
 }
 
 #map-legend {
-    position: absolute;
-    top: 50px; /* Adjust as needed */
-    left: 150px; /* Adjust as needed */
     background: white;
     padding: 8px;
-    border-radius: 10px;
+    width: 100px;
     border: 1px solid #ccc;
     font-size: 0.9em;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
     z-index: 10;
 }
 
@@ -425,7 +421,8 @@ body {
     height: 600px; /* Your map height */
 }
 
-#reset-zoom {
+#reset-zoom,
+#zoomOutButton {
     padding: 15px;
     padding-top: 0; 
     padding-bottom: 0;
@@ -438,14 +435,16 @@ body {
     margin-right: 20px;
 }
 
-#reset-zoom:hover {
+#reset-zoom:hover,
+#zoomOutButton:hover {
     background-color: var(--chart-color-2);
     border: 2px solid var(--chart-color-2);
     cursor: pointer;
     transition: 0.2s;
 } 
 
-#reset-zoom:active {
+#reset-zoom:active,
+#zoomOutButton:active {
     background-color: #0a8ab5;
     border: 2px solid #0a8ab5;
     transition: 0.1s;
@@ -533,4 +532,50 @@ body {
 }
 .animated {
     animation: count 2s ease-in-out;
+}
+
+
+/* Center the SVG container */
+#choropleth-map svg {
+    display: block;
+    margin: auto;
+    position: relative;
+}
+
+
+
+#map-legend {
+    bottom: -118px;
+    left: 111px;
+    position: absolute;
+    background: rgb(255, 255, 255);
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.9em;
+    width: 120px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    z-index: 100;
+}
+
+#map-legend div {
+    margin-bottom: 2px; 
+}
+
+
+
+
+/* Scatter plot styling */
+
+.main_container_third_row_middle_top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0px 0px 20px 0px;
+}
+
+#zoomOutButton {
+    margin-top: 13px;
+    width: 120px;
+    height: 40px;
 }

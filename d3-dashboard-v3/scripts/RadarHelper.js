@@ -1,37 +1,35 @@
 function radarDraw(scope, element) {
-  /**
-   * Angular variables
-   *
-   */
-   
-  // watch for changes on scope.data
+  
+  // Watch for changes on scope.csv and scope.config
   scope.$watch("[csv, config]", function() {
-    var csv = scope.csv;
-    var config = scope.config;
-    var data = csv2json(csv);
-    RadarChart.draw(element[0], data, config);  // call the D3 RadarChart.draw function to draw the vis on changes to data or config
+    var csv = scope.csv; // Get the CSV data from the scope
+    var config = scope.config; // Get the configuration from the scope
+    var data = csv2json(csv); // Convert the CSV data to JSON format
+    RadarChart.draw(element[0], data, config); // Call the RadarChart.draw function to draw the visualization
   });
 
-
-  // helper function csv2json to return json data from csv
+  // Helper function to convert CSV data to JSON format
   function csv2json(csv) {
-    csv = csv.replace(/, /g, ","); // trim leading whitespace in csv file
-    var json = d3.csv.parse(csv); // parse csv string into json
-    // reshape json data
+    csv = csv.replace(/, /g, ","); // Remove leading whitespace in the CSV file
+
+    var json = d3.csv.parse(csv); // Parse the CSV string into a JSON object
+
+    // Reshape the JSON data
     var data = [];
-    var groups = []; // track unique groups
+    var groups = []; // Track unique groups
+
     json.forEach(function(record) {
       var group = record.group;
       if (groups.indexOf(group) < 0) {
-        groups.push(group); // push to unique groups tracking
-        data.push({ // push group node in data
+        groups.push(group); // Add the group to the unique groups tracking
+        data.push({ // Push a new group node to the data array
           group: group,
           axes: []
         });
       };
       data.forEach(function(d) {
-        if (d.group === record.group) { // push record data into right group in data
-          d.axes.push({
+        if (d.group === record.group) { // Check if the record belongs to the current group
+          d.axes.push({ // Push the record data into the corresponding group
             axis: record.axis,
             value: parseInt(record.value),
             description: record.description
@@ -42,6 +40,3 @@ function radarDraw(scope, element) {
     return data;
   }
 }
-
-
-

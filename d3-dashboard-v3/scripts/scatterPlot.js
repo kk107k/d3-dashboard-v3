@@ -137,4 +137,17 @@ d3.csv("./data/world-data-2023.csv").then(function (data) {
                 .duration(500)
                 .style("opacity", 0);
         });
+
+        // Function to handle zoom out button click
+function zoomOut() {
+    // Reset zoom transformation to its initial state
+    scatterSvg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+}
+
+// Add event listener to the button
+document.getElementById("zoomOutButton").addEventListener("click", zoomOut);
+
+
 });
+
+
